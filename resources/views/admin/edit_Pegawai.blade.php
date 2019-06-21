@@ -97,35 +97,47 @@ desired effect
                 </div>
             <!-- /.box-header -->
             <!-- form start -->
-                @foreach($tb_detail as $d)
-                <form role="form" method="POST" action="/admin/detail/update">
+            @foreach($tb_pegawai as $p)
+                <form role="form" method="POST" action="/pegawaiUpdate">
                 <div class="box-body">
                   <div class="form-group">
 
                     {{csrf_field()}}
 
-                    <label for="in_id">Id Tiket</label>
-                    <input type="text" disabled="disabled" style="cursor: default;" class="form-control" id="in_id" placeholder="Masukan Id" name="id_tiket" value="{{ $d->id_tiket }}">
-                    <label for="in_harga">Harga</label>
-                    <input type="text" class="form-control" id="in_harga" placeholder="Masukan Harga" name="harga" value="{{ $d->harga }}">
-                    <label for="in_tujuan">Tujuan</label>
-                    <input type="text" class="form-control" id="in_tujuan" placeholder="Masukan Tujuan" name="tujuan" value="{{ $d->tujuan }}">
-                    <label for="in_kode">Kode Tiket</label>
-                    <input type="text" class="form-control" id="in_kode" placeholder="Masukan Kode" name="kode_tiket" value="{{ $d->kode_tiket }}">
+                    <label for="input1">ID Pegawai</label>
+                    <input type="text" class="form-control" id="input1" placeholder="Masukan ID" name="id_pegawai" value="{{$p->id_pegawai}}">
+                    <label for="input2">Nama Depan</label>
+                    <input type="text" class="form-control" id="input2" placeholder="Masukan Nama Depan" name="nama_depan" value="{{$p->nama_depan}}">
+                    <label for="input3">Nama Belakang</label>
+                    <input type="text" class="form-control" id="input3" placeholder="Masukan Nama Belakang" name="nama_belakang" value="{{$p->nama_belakang}}">
+                    <label for="exampleInputEmail1">Jenis Kelamin</label>
+                    <div class="form-group">
+                      @if($p->jk=="Pria")
+                        <input type="radio" checked="true" class="radio-control" name="r1" value="Pria" id="radioPria"> Pria
+                        <input type="radio" class="radio-control" name="r1" value="Wanita" id="radioWanita"> Wanita
+                      @else
+                        <input type="radio" class="radio-control" name="r1" value="Pria" id="radioPria"> Pria
+                        <input type="radio" checked="true" class="radio-control" name="r1" value="Wanita" id="radioWanita"> Wanita
+                      @endif
+                    </div>
+                    <label for="phone">Nomor Telepon</label>
+                    <input type="phone" class="form-control" name="phone" id="phone" placeholder="Nomor Telepon Pegawai" value="{{$p->no_telp}}">
+                    <label for="Pekerjaan">Posisi Pekerjaan</label>
+                    <input type="text" class="form-control" name="pekerjaan" id="Pekerjaan" placeholder="Masukkan Pekerjaan" value="{{$p->pekerjaan}}">
                   </div>
                 
                 <!-- /.box-body -->
 
                   <div class="box-footer">
-                    <input type="submit" class="btn btn-primary" name="btn_submit" value="Submit"></input>
+                    <button type="submit" class="btn btn-primary" name="btn_submit">Submit</button>
                   </div>
                 </div>
                 </form>
-                @endforeach
+              @endforeach
               </div>
             </div>
 
-            <h1>Detail Tiket</h1>
+            <h1>Pegawai</h1>
 
             <br>
             <br>
@@ -133,17 +145,28 @@ desired effect
             <div class="box-body">
             <table id="example2" class="table table-bordered table-hover table-striped">
                 <tr>
-                  <th>Id_tiket</th>
-                  <th>Harga</th>
-                  <th>Tujuan</th>
-                  <th>Kode Tiket</th>
+                  <th>ID</th>
+                  <th>Nama Depan</th>
+                  <th>Nama Belakang</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Telepon</th>
+                  <th>Pekerjaan</th>
+                  <th>Action</th>
                 </tr>
-                  @foreach($tb_detail as $d1)
+                
+                  @foreach($tb_pegawai as $p)
                   <tr>
-                    <td>{{ $d1->id_tiket }}</td>
-                    <td>{{ $d1->harga }}</td>
-                    <td>{{ $d1->tujuan }}</td>
-                    <td>{{ $d1->kode_tiket}}</td>
+                    <td>{{ $p->id_pegawai }}</td>
+                    <td>{{ $p->nama_depan }}</td>
+                    <td>{{ $p->nama_belakang }}</td>
+                    <td>{{ $p->jk}}</td>
+                    <td>{{ $p->no_telp}}</td>
+                    <td>{{ $p->pekerjaan}}</td>
+                    <td>
+                      <a href="/admin/pegawai/edit/{{ $p->id_pegawai }}">Edit</a>
+                      |
+                      <a href="/admin/pegawai/hapus/{{ $p->id_pegawai }}">Hapus</a>
+                    </td>
                   </tr>
                   @endforeach
             </table>

@@ -38,11 +38,12 @@ class Detail_Model extends Model
     public static function detail_update($request)
     {
 
-        DB::table('tb_detail')->where('id_tiket',$request->id)->update([
+        DB::table('tb_detail')->where('id_tiket',$request->id_tiket)->update([
             'id_tiket'=>$request->id_tiket,
             'harga'=>$request->harga, 
             'tujuan'=>$request->tujuan, 
             'kode_tiket'=>$request->kode_tiket
         ]);
+        
     }
 }

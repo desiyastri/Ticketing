@@ -97,22 +97,22 @@ desired effect
                 </div>
             <!-- /.box-header -->
             <!-- form start -->
-                <form role="form" method="POST" action="/pegawaiAction">
+                <form role="form" method="POST" action="/pegawaiUpdate">
                 <div class="box-body">
                   <div class="form-group">
 
                     {{csrf_field()}}
 
                     <label for="input1">ID Pegawai</label>
-                    <input type="text" class="form-control" id="input1" placeholder="Masukan ID" name="id_tiket">
+                    <input type="text" class="form-control" id="input1" placeholder="Masukan ID" name="id_pegawai">
                     <label for="input2">Nama Depan</label>
-                    <input type="text" class="form-control" id="input2" placeholder="Masukan Nama Depan" name="harga">
+                    <input type="text" class="form-control" id="input2" placeholder="Masukan Nama Depan" name="nama_depan">
                     <label for="input3">Nama Belakang</label>
-                    <input type="text" class="form-control" id="input3" placeholder="Masukan Nama Belakang" name="tujuan">
+                    <input type="text" class="form-control" id="input3" placeholder="Masukan Nama Belakang" name="nama_belakang">
                     <label for="exampleInputEmail1">Jenis Kelamin</label>
                     <div class="form-group">
-                      <input type="radio" class="radio-control" name="r1" id="radioPria"> Pria
-                      <input type="radio" class="radio-control" name="r1" id="radioPria"> Wanita
+                      <input type="radio" class="radio-control" name="r1" value="Pria" id="radioPria"> Pria
+                      <input type="radio" class="radio-control" name="r1" value="Wanita" id="radioWanita"> Wanita
                     </div>
                     <label for="phone">Nomor Telepon</label>
                     <input type="phone" class="form-control" name="phone" id="phone" placeholder="Nomor Telepon Pegawai">
@@ -156,9 +156,9 @@ desired effect
                     <td>{{ $p->no_telp}}</td>
                     <td>{{ $p->pekerjaan}}</td>
                     <td>
-                      <a href="/admin/pegawai/edit{{ $p->id_pegawai }}">Edit</a>
+                      <a href="/admin/pegawai/edit/{{ $p->id_pegawai }}">Edit</a>
                       |
-                      <a href="/admin/pegawai/hapus{{ $p->id_pegawai }}">Hapus</a>
+                      <a href="/admin/pegawai/hapus/{{ $p->id_pegawai }}">Hapus</a>
                     </td>
                   </tr>
                   @endforeach

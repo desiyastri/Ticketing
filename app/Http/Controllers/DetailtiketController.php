@@ -74,7 +74,9 @@ class DetailtiketController extends Controller
 
 	 	return view('/admin/edit_Detail', ['tb_detail' => $tb_detail]);
 	}
-	public function detail_Update(Request $request){
+	
+	public function detail_Update(Request $request)
+	{
 
 		Detail_Model::detail_update($request);
 

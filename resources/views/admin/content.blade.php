@@ -22,6 +22,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{asset('dist/css/skins/skin-red.min.css')}}">
 
+  <!-- DataTables CDN -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+
+  <!-- JQuery for modal box -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>-->
@@ -69,8 +75,8 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        Detail Tiket
+        <small>Informasi setiap tiket yang dimiliki setiap penumpang</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -83,53 +89,104 @@ desired effect
 
       <!--------------------------
         | Your Page Content Here |
-        -------------------------->
+        -------------------------->        
 
         <div class="content">
           <div class="container-fluid">
             @yield('content')
 
-            <div class="col-md-12">
-              <!-- general form elements -->
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Kategori</h3>
-                </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-                <form role="form" method="POST" action="/detailAction">
-                <div class="box-body">
-                  <div class="form-group">
-
-                    {{csrf_field()}}
-
-                    <label for="in_id">Id Tiket</label>
-                    <input type="text" class="form-control" id="in_id" placeholder="Masukan Id" name="id_tiket">
-                    <label for="in_harga">Harga</label>
-                    <input type="text" class="form-control" id="in_harga" placeholder="Masukan Harga" name="harga">
-                    <label for="in_tujuan">Tujuan</label>
-                    <input type="text" class="form-control" id="in_tujuan" placeholder="Masukan Tujuan" name="tujuan">
-                    <label for="in_kode">Kode Tiket</label>
-                    <input type="text" class="form-control" id="in_kode" placeholder="Masukan Kode" name="kode_tiket">
-                  </div>
-                
-                <!-- /.box-body -->
-
-                  <div class="box-footer">
-                    <input type="submit" class="btn btn-primary" name="btn_submit" value="Submit"></input>
-                  </div>
-                </div>
-                </form>
-              </div>
-            </div>
-
-            <h1>Detail Tiket</h1>
-
-            <br>
-            <br>
-
             <div class="box-body">
-            <table id="example2" class="table table-striped table-bordered table-hover">
+                <!-- START MODAL FOR ADD -->
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal" style="width: 10rem; float: right; margin-bottom: 1rem">
+                  Add
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" style="margin-bottom: -20px" id="exampleModalLabel">Tambah Data Detail Tiket</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <form role="form" id="formAdd" method="POST" action="/detailAction">
+                        <div class="modal-body">
+                            <div class="box-body">
+                              <div class="form-group">                    
+                                {{csrf_field()}}                    
+                                <label for="in_id">Id Tiket</label>                    
+                                <input type="text" class="form-control" placeholder="Masukan Id" name="id_tiket">                    
+                                <label for="in_harga">Harga</label>                    
+                                <input type="text" class="form-control" placeholder="Masukan Harga" name="harga">                    
+
+                                <label for="in_tujuan">Tujuan</label>                    
+                                <input type="text" class="form-control" placeholder="Masukan Tujuan" name="tujuan">                    
+
+                                <label for="in_kode">Kode Tiket</label>                    
+                                <input type="text" class="form-control" placeholder="Masukan Kode" name="kode_tiket">                  
+                              </div><!-- /.box-body -->                                
+                            </div>                
+                        </div>
+                        <div class="modal-footer">
+                          <input style="float:right;" type="submit" class="btn btn-primary" name="btn_submit" value="Submit"></input>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- END MODAL -->
+
+                <!-- START MODAL FOR EDIT -->
+
+                <!-- Modal -->
+                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" style="margin-bottom: -20px" id="exampleModalLabel">Edit Data Detail Tiket</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <form role="form" method="POST" id="editForm" action="/admin/detail/edit/">
+                        {{csrf_field()}}                    
+                        {{method_field('PUT')}}
+
+
+
+                        <div class="modal-body">
+                            <div class="box-body">
+                              <div class="form-group">        
+
+                                <label for="in_id">Id Tiket</label>                    
+                                <input type="text" class="form-control" id="in_id" placeholder="Masukan Id" name="id_tiket">                    
+                                <label for="in_harga">Harga</label>                    
+                                <input type="text" class="form-control" id="in_harga" placeholder="Masukan Harga" name="harga">                    
+
+                                <label for="in_tujuan">Tujuan</label>                    
+                                <input type="text" class="form-control" id="in_tujuan" placeholder="Masukan Tujuan" name="tujuan">                    
+
+                                <label for="in_kode">Kode Tiket</label>                    
+                                <input type="text" class="form-control" id="in_kode" placeholder="Masukan Kode" name="kode_tiket">                  
+                              </div><!-- /.box-body -->                                
+                            </div>                
+                        </div>
+                        <div class="modal-footer">
+                          <input style="float:right;" type="submit" class="btn btn-primary" name="btn_update" value="Update"></input>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- END MODAL -->
+
+            <table id="detailTable" class="table table-striped table-bordered table-hover">
                 <tr>
                   <th>Id_tiket</th>
                   <th>Harga</th>
@@ -145,9 +202,10 @@ desired effect
                     <td>{{ $d->tujuan }}</td>
                     <td>{{ $d->kode_tiket}}</td>
                     <td>
-                      <a href="/admin/detail/edit/{{ $d->id_tiket }}">Edit</a>
-                      &nbsp;|&nbsp;
-                      <a href="/admin/detail/hapus/{{ $d->id_tiket }}">Hapus</a>
+                      <input type="submit" id="edit" name="edit" data-toggle="modal" data-target="#editModal" class="btn btn-primary editBtn" value="Edit">
+                      <a href="/admin/detail/hapus/{{ $d->id_tiket }}">
+                        <input type="submit" name="btnDelete" class="btn btn-danger" value="Delete">
+                      </a> 
                     </td>
                   </tr>
                   @endforeach
@@ -177,6 +235,12 @@ desired effect
 
 <!-- REQUIRED JS SCRIPTS -->
 
+
+
+<!-- CDN DataTables Script -->
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
 <!-- jQuery 3 -->
 <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -187,5 +251,36 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+<!-- /* E D I T  W I T H  M O D A L  B O X */ -->
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+
+    var table=$('#detailTable').DataTable();
+
+    table.on('click', '.editBtn',function(){
+
+      $tr =  $(this).closest('tr');
+      if($($tr).hasClass('child')){
+        $tr = $tr.prev('.parent');
+      }
+
+      var data=table.row($tr).data();
+      console.log(data);
+
+
+      $('#id_tiket').val(data[1]);
+      $('#harga').val(data[2]);
+      $('#tujuan').val(data[3]);
+      $('#kode_tiket').val(data[4]);
+
+      $('#editForm').attr('action','/admin/detail/edit/'+data[0]);
+      $('#editModal').modal('show');
+    });
+
+  });
+
+</script>
 </body>
 </html>

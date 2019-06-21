@@ -16,10 +16,10 @@ class PegawaiController extends Controller
     	return view('admin/pegawai', ['tb_pegawai'=>$result]);
     }
 
-    public function add_Pegawai(Request $data_input)
+    public function add_Pegawai(Request $request)
 	{
 		
-		Pegawai_Model::add_pegawai($data_input);
+		Pegawai_Model::add_pegawai($request);
 
 		return redirect('/admin/pegawai');
 	}
@@ -29,5 +29,19 @@ class PegawaiController extends Controller
         Pegawai_Model::delete_pegawai($id);
 
         return redirect('/admin/pegawai');
+    }
+
+    public function edit_Pegawai($id)
+    {
+        $tb_pegawai=Pegawai_Model::edit_pegawai($id);
+
+        return view('/admin/edit_Pegawai', ['tb_pegawai'=>$tb_pegawai]);
+    }
+
+    public function  update_Pegawai(Request $request)
+    {
+        Pegawai_Model::update_pegawai($request);
+
+        return redirect('admin/pegawai');
     }
 }

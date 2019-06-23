@@ -70,9 +70,9 @@ class DetailtiketController extends Controller
 	/* E D I T  D A T A */
 	public function edit_Detail($id)
 	{
-	 	$tb_detail = DB::table('tb_detail')->where('id_tiket',$id)->get();
+	 	$tb_detail_lagi = DB::table('tb_detail')->where('id_tiket',$id)->get();
 
-	 	return view('/admin/edit_Detail', ['tb_detail' => $tb_detail]);
+	 	return view('/admin/content', ['tb_detail_lagi' => $tb_detail_lagi]);
 	}
 	
 	public function detail_Update(Request $request)

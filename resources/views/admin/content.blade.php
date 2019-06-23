@@ -153,9 +153,9 @@ desired effect
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <form role="form" method="POST" id="editForm" action="/admin/detail/edit/">
-                        {{csrf_field()}}                    
-                        {{method_field('PUT')}}
+                      @foreach($tb_detail as $b)
+                      <form role="form" method="POST" id="editForm" action="/admin/detail/update">
+                        {{csrf_field()}} 
 
 
 
@@ -164,15 +164,15 @@ desired effect
                               <div class="form-group">        
 
                                 <label for="in_id">Id Tiket</label>                    
-                                <input type="text" class="form-control" id="in_id" placeholder="Masukan Id" name="id_tiket">                    
+                                <input type="text" class="form-control" id="in_id" placeholder="Masukan Id" name="id_tiket" value="{{ $b->id_tiket }}">                    
                                 <label for="in_harga">Harga</label>                    
-                                <input type="text" class="form-control" id="in_harga" placeholder="Masukan Harga" name="harga">                    
+                                <input type="text" class="form-control" id="in_harga" placeholder="Masukan Harga" name="harga" value="{{ $b->harga }}">                    
 
                                 <label for="in_tujuan">Tujuan</label>                    
-                                <input type="text" class="form-control" id="in_tujuan" placeholder="Masukan Tujuan" name="tujuan">                    
+                                <input type="text" class="form-control" id="in_tujuan" placeholder="Masukan Tujuan" name="tujuan" value="{{ $b->tujuan }}">                    
 
                                 <label for="in_kode">Kode Tiket</label>                    
-                                <input type="text" class="form-control" id="in_kode" placeholder="Masukan Kode" name="kode_tiket">                  
+                                <input type="text" class="form-control" id="in_kode" placeholder="Masukan Kode" name="kode_tiket" value="{{ $b->kode_tiket }}">                  
                               </div><!-- /.box-body -->                                
                             </div>                
                         </div>
@@ -180,6 +180,7 @@ desired effect
                           <input style="float:right;" type="submit" class="btn btn-primary" name="btn_update" value="Update"></input>
                         </div>
                       </form>
+                      @endforeach
                     </div>
                   </div>
                 </div>
